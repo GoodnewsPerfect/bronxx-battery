@@ -19,10 +19,14 @@ use Illuminate\Notifications\Notifiable;
     'access_token',
     'username',
     'phone_number',
+    'birth_date',
     'profile_photo_url',
     'auth_type',
     'is_admin',
     'country_code',
+    'country',
+    'state',
+    'city',
 ])]
 #[Hidden(['password', 'remember_token', 'access_token'])]
 class User extends Authenticatable
@@ -39,6 +43,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'birth_date' => 'date:Y-m-d',
             'password' => 'hashed',
             'auth_type' => 'string', // Enum handled as string
             'is_admin' => 'boolean',

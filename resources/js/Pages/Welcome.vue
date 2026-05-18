@@ -432,7 +432,7 @@ const features = [
                 <!-- Bottom Footer -->
                 <div class="border-t border-gray-800 pt-8 flex flex-col md:row items-center justify-between gap-4">
                     <p class="text-sm text-gray-500">
-                        &copy; 2025 Bronx. All rights reserved.
+                        &copy; 2026 Bronx. All rights reserved.
                     </p>
                     <div class="flex space-x-6">
                         <a href="#" class="text-gray-400 hover:text-white transition">

@@ -166,7 +166,7 @@ const form = ref({
                     </div>
                 </div>
                 <div class="border-t border-gray-800 pt-8 text-center">
-                    <p class="text-sm text-gray-500">&copy; 2025 Bronx. All rights reserved.</p>
+                    <p class="text-sm text-gray-500">&copy; 2026 Bronx. All rights reserved.</p>
                 </div>
             </div>
         </footer>

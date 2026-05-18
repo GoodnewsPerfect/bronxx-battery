@@ -18,7 +18,7 @@ class OrderController extends Controller
                 ->with('items')
                 ->where('user_id', $request->user()->id)
                 ->latest()
-                ->get(['id', 'total_amount', 'status', 'payment_status', 'shipping_address', 'created_at']),
+                ->get(['id', 'user_id', 'total_amount', 'status', 'payment_status', 'payment_id', 'shipping_address', 'created_at']),
         ]);
     }
 

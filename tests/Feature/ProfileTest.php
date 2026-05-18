@@ -2,12 +2,12 @@
 
 use App\Models\User;
 
-test('profile page is displayed', function () {
+test('dashboard profile section is displayed', function () {
     $user = User::factory()->create();
 
     $response = $this
         ->actingAs($user)
-        ->get('/profile');
+        ->get('/dashboard');
 
     $response->assertOk();
 });
@@ -17,6 +17,7 @@ test('profile information can be updated', function () {
 
     $response = $this
         ->actingAs($user)
+        ->from('/dashboard')
         ->patch('/profile', [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -24,7 +25,7 @@ test('profile information can be updated', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect('/dashboard');
 
     $user->refresh();
 
@@ -38,6 +39,7 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response = $this
         ->actingAs($user)
+        ->from('/dashboard')
         ->patch('/profile', [
             'name' => 'Test User',
             'email' => $user->email,
@@ -45,12 +47,12 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect('/dashboard');
 
     $this->assertNotNull($user->refresh()->email_verified_at);
 });
 
-test('user can delete their account', function () {
+test('profile delete route is not available', function () {
     $user = User::factory()->create();
 
     $response = $this
@@ -59,27 +61,7 @@ test('user can delete their account', function () {
             'password' => 'password',
         ]);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
-
-    $this->assertGuest();
-    $this->assertNull($user->fresh());
-});
-
-test('correct password must be provided to delete account', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
-            'password' => 'wrong-password',
-        ]);
-
-    $response
-        ->assertSessionHasErrors('password')
-        ->assertRedirect('/profile');
+    $response->assertStatus(405);
 
     $this->assertNotNull($user->fresh());
 });

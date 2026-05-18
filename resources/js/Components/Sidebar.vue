@@ -1,9 +1,32 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 defineProps({
     open: Boolean,
 });
+
+const page = usePage();
+const currentPath = computed(() => page.url.split('?')[0]);
+
+const isActivePath = (paths) => {
+    const activePaths = Array.isArray(paths) ? paths : [paths];
+
+    return activePaths.some((path) => {
+        if (path === '/') {
+            return currentPath.value === '/';
+        }
+
+        return currentPath.value === path || currentPath.value.startsWith(`${path}/`);
+    });
+};
+
+const navItemClass = (paths) => [
+    'flex items-center rounded-md px-4 py-2 transition',
+    isActivePath(paths)
+        ? 'bg-[#0056D2] text-white'
+        : 'text-gray-800 hover:bg-gray-100',
+];
 </script>
 
 <template>
@@ -20,31 +43,31 @@ defineProps({
             <nav class="flex-1 space-y-2 overflow-y-auto px-4 py-6">
                 <Link
                     href="/"
-                    class="flex items-center rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-100"
+                    :class="navItemClass('/')"
                 >
                     <span>Home</span>
                 </Link>
                 <Link
                     :href="route('product.index')"
-                    class="flex items-center rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-100"
+                    :class="navItemClass('/product')"
                 >
                     <span>Product</span>
                 </Link>
                 <Link
                     :href="route('about.index')"
-                    class="flex items-center rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-100"
+                    :class="navItemClass('/about')"
                 >
                     <span>About</span>
                 </Link>
                 <Link
                     :href="route('contact.index')"
-                    class="flex items-center rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-100"
+                    :class="navItemClass('/contact')"
                 >
                     <span>Contact</span>
                 </Link>
                 <Link
                     :href="$page.props.auth.user ? route('orders.index') : route('login')"
-                    class="flex items-center rounded-md px-4 py-2 text-gray-800 transition hover:bg-gray-100"
+                    :class="navItemClass(['/orders', '/dashboard'])"
                 >
                     <span>My Account</span>
                 </Link>

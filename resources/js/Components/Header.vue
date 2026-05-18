@@ -12,8 +12,28 @@ const isCartOpen = ref(false);
 const activeCart = computed(() => props.cart ?? page.props.cart ?? { items: {}, item_count: 0, total: '0.00' });
 const cartItems = computed(() => Object.values(activeCart.value.items ?? {}));
 const cartTotal = computed(() => activeCart.value.total ?? '0.00');
+const currentPath = computed(() => page.url.split('?')[0]);
 
 const emit = defineEmits(['toggleSidebar', 'toggleSearch']);
+
+const isActivePath = (paths) => {
+    const activePaths = Array.isArray(paths) ? paths : [paths];
+
+    return activePaths.some((path) => {
+        if (path === '/') {
+            return currentPath.value === '/';
+        }
+
+        return currentPath.value === path || currentPath.value.startsWith(`${path}/`);
+    });
+};
+
+const navLinkClass = (paths) => [
+    'font-medium transition',
+    isActivePath(paths)
+        ? 'text-white border-b-2 border-white pb-1'
+        : 'text-white/85 hover:text-white',
+];
 
 const updateQuantity = (item, quantity) => {
     const nextQuantity = Math.max(1, quantity);
@@ -71,11 +91,11 @@ const clearCart = () => {
 
                 <!-- Desktop Nav -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <Link href="/" class="text-white hover:text-white/80 font-medium transition">Home</Link>
-                    <Link :href="route('product.index')" class="text-white hover:text-white/80 font-medium transition">Product</Link>
-                    <Link :href="route('about.index')" class="text-white hover:text-white/80 font-medium transition">About</Link>
-                    <Link :href="route('contact.index')" class="text-white hover:text-white/80 font-medium transition">Contact</Link>
-                    <Link :href="user ? route('orders.index') : route('login')" class="text-white hover:text-white/80 font-medium transition">My Account</Link>
+                    <Link href="/" :class="navLinkClass('/')">Home</Link>
+                    <Link :href="route('product.index')" :class="navLinkClass('/product')">Product</Link>
+                    <Link :href="route('about.index')" :class="navLinkClass('/about')">About</Link>
+                    <Link :href="route('contact.index')" :class="navLinkClass('/contact')">Contact</Link>
+                    <Link :href="user ? route('orders.index') : route('login')" :class="navLinkClass(['/orders', '/dashboard'])">My Account</Link>
                 </nav>
 
                 <!-- Icons -->

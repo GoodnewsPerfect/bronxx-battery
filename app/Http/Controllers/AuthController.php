@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\WelcomeToBronx;
+use App\Models\CartItem;
 use App\Models\User;
 use App\Services\GeoLocationService;
 use App\Services\KingsChatService;
@@ -85,6 +86,7 @@ class AuthController extends Controller
             }
 
             Auth::login($user);
+            $this->mergeGuestCartIntoUser($request, $user);
 
             return redirect()->intended(route('dashboard', absolute: false));
         } catch (\Exception $e) {
@@ -109,6 +111,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+            $this->mergeGuestCartIntoUser($request, $request->user());
 
             return redirect()->intended(route('dashboard', absolute: false));
         }
@@ -147,6 +150,7 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
+        $this->mergeGuestCartIntoUser($request, $user);
 
         return redirect(route('dashboard', absolute: false));
     }
@@ -159,5 +163,61 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'Logged out successfully.');
+    }
+
+    private function mergeGuestCartIntoUser(Request $request, User $user): void
+    {
+        $sessionIds = array_unique(array_filter([
+            $request->session()->getId(),
+            $request->session()->get('cart.session_id'),
+        ]));
+
+        if ($sessionIds === []) {
+            return;
+        }
+
+        $guestItems = CartItem::query()
+            ->whereNull('user_id')
+            ->whereIn('session_id', $sessionIds)
+            ->get();
+
+        foreach ($guestItems as $guestItem) {
+            $userItem = CartItem::query()
+                ->where('user_id', $user->id)
+                ->where('product_id', $guestItem->product_id)
+                ->first();
+
+            if ($userItem) {
+                $userItem->quantity += $guestItem->quantity;
+                $userItem->subtotal = number_format($userItem->quantity * (float) $userItem->price, 2, '.', '');
+                $userItem->save();
+                $guestItem->delete();
+
+                continue;
+            }
+
+            $guestItem->forceFill([
+                'user_id' => $user->id,
+                'session_id' => $request->session()->getId(),
+            ])->save();
+        }
+
+        $items = CartItem::query()
+            ->where('user_id', $user->id)
+            ->get()
+            ->mapWithKeys(fn (CartItem $item) => [
+                $item->product_id => [
+                    'id' => $item->product_id,
+                    'name' => $item->product_name,
+                    'price' => $item->price,
+                    'image' => $item->product_image,
+                    'quantity' => $item->quantity,
+                    'subtotal' => $item->subtotal,
+                ],
+            ])
+            ->all();
+
+        $request->session()->put('cart.items', $items);
+        $request->session()->put('cart.session_id', $request->session()->getId());
     }
 }

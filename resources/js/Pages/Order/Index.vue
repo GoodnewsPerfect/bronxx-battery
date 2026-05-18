@@ -7,7 +7,10 @@ import Footer from '@/Components/Footer.vue';
 import Modal from '@/Components/Modal.vue';
 
 const props = defineProps({
-    orders: Array,
+    orders: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const page = usePage();
@@ -18,6 +21,8 @@ const statusFilter = ref('all');
 const sortBy = ref('newest');
 const selectedOrder = ref(null);
 const isDetailsOpen = ref(false);
+const isPaymentStarting = ref(false);
+const paymentActionError = ref('');
 
 const toggleSidebar = () => {
     isSidebarOpen.value = !isSidebarOpen.value;
@@ -34,6 +39,7 @@ const orderCode = (order) => `ORD-${String(order.id).padStart(10, '0')}`;
 
 const openDetails = (order) => {
     selectedOrder.value = order;
+    paymentActionError.value = '';
     isDetailsOpen.value = true;
 };
 
@@ -71,10 +77,59 @@ const orderSubtotal = computed(() => orderItems.value.reduce(
     0,
 ));
 
+const canCompleteSelectedOrder = computed(() => {
+    if (!selectedOrder.value) {
+        return false;
+    }
+
+    return selectedOrder.value.payment_status !== 'paid';
+});
+
+const startOrderPayment = () => {
+    if (!selectedOrder.value || isPaymentStarting.value) {
+        return;
+    }
+
+    isPaymentStarting.value = true;
+    paymentActionError.value = '';
+
+    const orderId = String(selectedOrder.value.id);
+    const successUrl = new URL(route('order.confirmation', orderId, false), window.location.origin);
+    const failUrl = new URL(route('order.confirmation', orderId, false), window.location.origin);
+
+    successUrl.searchParams.set('espees_return', 'success');
+    failUrl.searchParams.set('espees_return', 'failed');
+
+    window.axios.post(route('payment.initialize-espees'), {
+        orderId,
+        amount: selectedOrder.value.total_amount,
+        description: `Order #${orderId}`,
+        successUrl: successUrl.href,
+        failUrl: failUrl.href,
+    }, {
+        headers: {
+            Accept: 'application/json',
+        },
+    }).then(({ data }) => {
+        if (data.status === 'success' && data.payment_url) {
+            window.location.href = data.payment_url;
+            return;
+        }
+
+        paymentActionError.value = data.message || 'Unable to start Espees payment. Please try again.';
+    }).catch((error) => {
+        paymentActionError.value = error.response?.data?.message
+            || error.response?.data?.status_details
+            || 'Unable to start Espees payment. Please try again.';
+    }).finally(() => {
+        isPaymentStarting.value = false;
+    });
+};
+
 const filteredOrders = computed(() => {
     const query = searchQuery.value.trim().toLowerCase();
 
-    return [...props.orders]
+    return [...(props.orders ?? [])]
         .filter((order) => statusFilter.value === 'all' || order.status === statusFilter.value)
         .filter((order) => {
             if (!query) {
@@ -215,7 +270,7 @@ const filteredOrders = computed(() => {
 
                                     <tr v-if="!filteredOrders.length">
                                         <td colspan="5" class="px-3 py-12 text-center text-gray-500">
-                                            No orders found.
+                                            No orders.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -312,6 +367,21 @@ const filteredOrders = computed(() => {
                     <p class="mt-4 text-base text-gray-500">
                         {{ selectedOrder.shipping_address || 'No delivery address provided.' }}
                     </p>
+                </div>
+
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <p v-if="paymentActionError" class="mb-3 text-sm text-red-600">
+                        {{ paymentActionError }}
+                    </p>
+                    <button
+                        v-if="canCompleteSelectedOrder"
+                        type="button"
+                        @click="startOrderPayment"
+                        :disabled="isPaymentStarting"
+                        class="inline-flex w-full items-center justify-center rounded-lg bg-[#F9AD32] px-5 py-3 text-base font-semibold text-black shadow-sm transition hover:bg-[#f3a11d] disabled:opacity-50 sm:w-auto"
+                    >
+                        {{ isPaymentStarting ? 'Starting Payment...' : 'Complete Order' }}
+                    </button>
                 </div>
             </div>
         </Modal>
