@@ -129,54 +129,54 @@ const clearCart = () => {
     >
         <aside
             v-if="isCartOpen"
-            class="fixed right-0 top-0 z-[70] flex h-screen w-full max-w-[600px] flex-col bg-white shadow-2xl"
+            class="fixed right-0 top-0 z-[70] flex h-screen w-[min(92vw,360px)] flex-col bg-white shadow-2xl"
         >
-            <div class="px-8 pt-8 text-center">
-                <h2 class="text-xl font-bold text-gray-900">Cart</h2>
+            <div class="px-5 pt-6 text-center">
+                <h2 class="text-lg font-bold text-gray-900">Cart</h2>
                 <button
                     @click="isCartOpen = false"
-                    class="mx-auto mt-7 flex h-8 w-8 items-center justify-center text-gray-900 hover:text-gray-600"
+                    class="mx-auto mt-5 flex h-7 w-7 items-center justify-center text-gray-900 hover:text-gray-600"
                     aria-label="Close cart"
                 >
-                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto px-6 pt-6">
-                <div v-if="!cartItems.length" class="py-16 text-center text-gray-500">
+            <div class="flex-1 overflow-y-auto px-4 pt-5">
+                <div v-if="!cartItems.length" class="py-14 text-center text-sm text-gray-500">
                     Your cart is empty.
                 </div>
 
                 <div
                     v-for="item in cartItems"
                     :key="item.id"
-                    class="flex gap-4 border-b border-gray-200 py-5"
+                    class="flex gap-3 border-b border-gray-200 py-4"
                 >
                     <img
                         :src="item.image || '/images/product1.jpg'"
                         :alt="item.name"
-                        class="h-24 w-24 shrink-0 rounded-md object-cover"
+                        class="h-16 w-16 shrink-0 rounded-md object-cover"
                     >
                     <div class="min-w-0 flex-1">
-                        <h3 class="truncate text-lg font-bold text-gray-900">{{ item.name }}</h3>
-                        <div class="mt-2 flex items-center gap-2 text-base text-gray-600">
-                            <img src="/images/espees_logo.png" alt="Espees" class="h-5 w-5 object-contain">
+                        <h3 class="truncate text-sm font-bold text-gray-900">{{ item.name }}</h3>
+                        <div class="mt-1.5 flex items-center gap-2 text-sm text-gray-600">
+                            <img src="/images/espees_logo.png" alt="Espees" class="h-4 w-4 object-contain">
                             <span>{{ item.price }}</span>
                         </div>
-                        <div class="mt-3 flex items-center gap-5">
+                        <div class="mt-2 flex items-center gap-3">
                             <button
                                 @click="updateQuantity(item, item.quantity - 1)"
-                                class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-2xl leading-none text-gray-900 shadow-sm hover:bg-gray-50"
+                                class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-xl leading-none text-gray-900 shadow-sm hover:bg-gray-50"
                                 aria-label="Decrease quantity"
                             >
                                 -
                             </button>
-                            <span class="min-w-5 text-center text-xl font-medium text-gray-900">{{ item.quantity }}</span>
+                            <span class="min-w-4 text-center text-base font-medium text-gray-900">{{ item.quantity }}</span>
                             <button
                                 @click="updateQuantity(item, item.quantity + 1)"
-                                class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-2xl leading-none text-gray-900 shadow-sm hover:bg-gray-50"
+                                class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-xl leading-none text-gray-900 shadow-sm hover:bg-gray-50"
                                 aria-label="Increase quantity"
                             >
                                 +
@@ -185,30 +185,30 @@ const clearCart = () => {
                     </div>
                     <button
                         @click="removeItem(item)"
-                        class="mt-16 flex h-8 w-8 shrink-0 items-center justify-center text-[#FF4D4D] hover:text-red-600"
+                        class="mt-10 flex h-7 w-7 shrink-0 items-center justify-center text-[#FF4D4D] hover:text-red-600"
                         aria-label="Remove item"
                     >
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m-7 0h8m-5-3h2a1 1 0 011 1v2h-4V5a1 1 0 011-1z" />
                         </svg>
                     </button>
                 </div>
             </div>
 
-            <div class="flex gap-3 px-6 pb-6 pt-4">
-                <div v-if="cartItems.length" class="mr-auto flex items-center text-sm font-semibold text-gray-700">
+            <div class="flex gap-2 px-4 pb-5 pt-4">
+                <div v-if="cartItems.length" class="mr-auto flex items-center text-xs font-semibold text-gray-700">
                     Total: {{ cartTotal }}
                 </div>
                 <Link
                     :href="route('checkout')"
-                    class="flex-1 rounded-lg bg-[#F9AD32] px-5 py-3 text-center font-semibold text-black transition hover:bg-[#f3a11d]"
+                    class="flex-1 rounded-lg bg-[#F9AD32] px-4 py-2.5 text-center text-sm font-semibold text-black transition hover:bg-[#f3a11d]"
                     :class="{ 'pointer-events-none opacity-50': !cartItems.length }"
                 >
                     Checkout
                 </Link>
                 <button
                     @click="clearCart"
-                    class="rounded-lg border border-gray-200 bg-white px-6 py-3 font-semibold text-gray-900 shadow-sm transition hover:bg-gray-50"
+                    class="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-sm transition hover:bg-gray-50"
                     :disabled="!cartItems.length"
                     :class="{ 'opacity-50': !cartItems.length }"
                 >
