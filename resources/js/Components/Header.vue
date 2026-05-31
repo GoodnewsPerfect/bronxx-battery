@@ -65,7 +65,7 @@ const clearCart = () => {
     <header class="fixed top-0 z-50 w-full transition-all duration-300 shadow-lg">
         <!-- Top Bar -->
         <div class="bg-[#0047AB] py-2 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto flex justify-start space-x-4 text-xs text-white/90">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-start gap-x-4 gap-y-1 text-xs text-white/90">
                 <template v-if="!user">
                     <Link :href="route('login')" class="hover:text-white transition">Log in</Link>
                     <span class="text-white/40">|</span>
@@ -81,7 +81,7 @@ const clearCart = () => {
 
         <!-- Main Navigation -->
         <div class="bg-[#0056D2] py-4 px-4 sm:px-6 lg:px-8 shadow-sm">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
                 <!-- Logo -->
                 <div class="flex items-center">
                     <Link href="/" class="flex items-center">
@@ -99,7 +99,7 @@ const clearCart = () => {
                 </nav>
 
                 <!-- Icons -->
-                <div class="flex items-center space-x-5 text-white">
+                <div class="flex shrink-0 items-center space-x-4 sm:space-x-5 text-white">
                     <button @click="emit('toggleSearch')" class="hover:text-white/80 transition" aria-label="Search products">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -215,8 +215,8 @@ const clearCart = () => {
                 </div>
             </div>
 
-            <div class="flex gap-2 px-4 pb-5 pt-4">
-                <div v-if="cartItems.length" class="mr-auto flex items-center text-xs font-semibold text-gray-700">
+            <div class="flex flex-wrap gap-2 px-4 pb-5 pt-4">
+                <div v-if="cartItems.length" class="mr-auto flex min-w-full items-center text-xs font-semibold text-gray-700 sm:min-w-0">
                     Total: {{ cartTotal }}
                 </div>
                 <Link

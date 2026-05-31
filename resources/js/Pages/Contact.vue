@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Header from '@/Components/Header.vue';
 import Sidebar from '@/Components/Sidebar.vue';
+import Footer from '@/Components/Footer.vue';
 
 defineProps({
     name: String,
@@ -25,7 +26,7 @@ const form = ref({
 <template>
     <Head title="Contact" />
 
-    <div class="min-h-screen bg-white text-gray-900 font-sans flex flex-col pt-28">
+    <div class="min-h-screen overflow-x-hidden bg-white text-gray-900 font-sans flex flex-col pt-28">
         <Sidebar :open="isSidebarOpen" />
         <Header :cart="cart" @toggle-sidebar="toggleSidebar" />
 
@@ -42,13 +43,13 @@ const form = ref({
         </section>
 
         <!-- Contact Content Section -->
-        <main class="flex-1 py-24 bg-white">
+        <main class="flex-1 py-16 sm:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-2 gap-16">
+                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
                     <!-- Left Side: Info -->
                     <div class="space-y-12">
                         <div class="space-y-6">
-                            <h2 class="text-4xl font-bold text-gray-900 leading-tight">We'd love to hear from you</h2>
+                            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">We'd love to hear from you</h2>
                             <p class="text-gray-600 leading-relaxed max-w-md">
                                 Reach out for product questions, partnerships, or support.
                             </p>
@@ -95,7 +96,7 @@ const form = ref({
                     </div>
 
                     <!-- Right Side: Form -->
-                    <div class="bg-white p-8 md:p-10 border border-gray-100 rounded-2xl shadow-sm">
+                    <div class="bg-white p-5 sm:p-8 md:p-10 border border-gray-100 rounded-2xl shadow-sm">
                         <form @submit.prevent class="space-y-6">
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
@@ -127,48 +128,17 @@ const form = ref({
         <!-- Newsletter & Footer (Reused) -->
         <section class="py-16 bg-[#00D1FF] text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8">
-                <div>
+                <div class="w-full md:w-auto">
                     <h2 class="text-3xl font-bold mb-2">Subscribe Newsletter</h2>
                     <p class="text-white/90">Stay up to date with the latest news and offers</p>
                 </div>
-                <form class="w-full max-w-md flex bg-white rounded-md overflow-hidden p-1 shadow-lg">
-                    <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-0">
-                    <button class="bg-[#FFD700] hover:bg-[#FFC400] text-black px-6 py-2 rounded font-bold transition">Subscribe</button>
+                <form class="w-full max-w-md flex flex-col sm:flex-row bg-white rounded-md overflow-hidden p-1 gap-1 sm:gap-0 shadow-lg">
+                    <input type="email" placeholder="Your email address" class="min-w-0 flex-1 px-4 py-3 sm:py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-0">
+                    <button class="bg-[#FFD700] hover:bg-[#FFC400] text-black px-6 py-3 sm:py-2 rounded font-bold transition">Subscribe</button>
                 </form>
             </div>
         </section>
 
-        <footer class="bg-[#0A1221] text-white pt-20 pb-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-3 gap-12 mb-20">
-                    <div class="space-y-6">
-                        <Link href="/" class="flex items-center">
-                            <img src="/images/Bronx_Logo_2-removebg-preview.png" alt="Bronx Logo" class="h-10 w-auto">
-                        </Link>
-                        <p class="text-gray-400 text-sm">Innovation in battery technology</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-6 uppercase text-sm tracking-wider">Quick Links</h4>
-                        <ul class="space-y-4 text-sm text-gray-400">
-                            <li><Link href="/" class="hover:text-white transition">Home</Link></li>
-                            <li><Link :href="route('product.index')" class="hover:text-white transition">Product</Link></li>
-                            <li><Link :href="route('about.index')" class="hover:text-white transition">About Us</Link></li>
-                            <li><Link :href="route('contact.index')" class="hover:text-white transition">Contact Us</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-6 uppercase text-sm tracking-wider">Opening Time</h4>
-                        <ul class="space-y-4 text-sm text-gray-400">
-                            <li>Monday - Friday: 9am - 5pm</li>
-                            <li>Saturday: 10am - 3pm</li>
-                            <li>Sunday: Closed</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="border-t border-gray-800 pt-8 text-center">
-                    <p class="text-sm text-gray-500">&copy; 2026 Bronx. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
+        <Footer />
     </div>
 </template>

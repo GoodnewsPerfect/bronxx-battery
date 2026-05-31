@@ -112,7 +112,7 @@ const maxWidthClass = computed(() => {
             >
                 <div
                     v-show="show"
-                    class="my-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all mx-auto sm:w-full dark:bg-gray-800"
+                    class="my-6 w-full max-w-[calc(100vw-2rem)] transform overflow-hidden rounded-lg bg-white shadow-xl transition-all mx-auto sm:w-full dark:bg-gray-800"
                     :class="['mx-auto', maxWidthClass]"
                 >
                     <slot v-if="showSlot" />

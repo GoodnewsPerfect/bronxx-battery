@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Header from '@/Components/Header.vue';
 import Sidebar from '@/Components/Sidebar.vue';
+import Footer from '@/Components/Footer.vue';
 
 defineProps({
     name: String,
@@ -53,7 +54,7 @@ const beliefs = [
 <template>
     <Head title="About" />
 
-    <div class="min-h-screen bg-white text-gray-900 font-sans flex flex-col pt-28">
+    <div class="min-h-screen overflow-x-hidden bg-white text-gray-900 font-sans flex flex-col pt-28">
         <Sidebar :open="isSidebarOpen" />
         <Header :cart="cart" @toggle-sidebar="toggleSidebar" />
 
@@ -70,14 +71,14 @@ const beliefs = [
         </section>
 
         <!-- 2. Beautiful Products Section -->
-        <section class="py-24 bg-white">
+        <section class="py-16 sm:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                     <div>
                         <img src="https://bronx.peachy.ng/build/assets/battery-specs.png" alt="Bronx Batteries" class="w-full object-contain" @error="(e) => e.target.src = '/images/bronx_spec.png'">
                     </div>
                     <div>
-                        <h2 class="text-4xl font-bold text-gray-900 mb-8 leading-tight">We have created beautiful products for you</h2>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight">We have created beautiful products for you</h2>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             A streamlined cloud solution. User generated content in real-time will have multiple touchpoints that evolve towards a unified experience across devices.
                         </p>
@@ -107,19 +108,19 @@ const beliefs = [
         </section>
 
         <!-- 4. Stats Section -->
-        <section class="py-24 bg-white">
+        <section class="py-16 sm:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-3 gap-12 text-center">
                     <div>
-                        <p class="text-5xl font-bold text-[#0056D2] mb-2">2346</p>
+                        <p class="text-4xl sm:text-5xl font-bold text-[#0056D2] mb-2">2346</p>
                         <p class="text-xs text-gray-400 uppercase tracking-widest font-bold">Employees from around the world</p>
                     </div>
                     <div>
-                        <p class="text-5xl font-bold text-[#0056D2] mb-2">345+</p>
+                        <p class="text-4xl sm:text-5xl font-bold text-[#0056D2] mb-2">345+</p>
                         <p class="text-xs text-gray-400 uppercase tracking-widest font-bold">We care about our investors</p>
                     </div>
                     <div>
-                        <p class="text-5xl font-bold text-[#0056D2] mb-2">26+</p>
+                        <p class="text-4xl sm:text-5xl font-bold text-[#0056D2] mb-2">26+</p>
                         <p class="text-xs text-gray-400 uppercase tracking-widest font-bold">People are our biggest capital</p>
                     </div>
                 </div>
@@ -127,7 +128,7 @@ const beliefs = [
         </section>
 
         <!-- 5. Milestones Section -->
-        <section class="py-24 bg-white">
+        <section class="py-16 sm:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold mb-12">Milestones</h2>
                 <div class="space-y-0 border-l-2 border-gray-100 ml-2">
@@ -142,7 +143,7 @@ const beliefs = [
         </section>
 
         <!-- 6. What we believe Section -->
-        <section class="py-24 bg-white">
+        <section class="py-16 sm:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold mb-12">What we believe</h2>
                 <div class="grid md:grid-cols-3 gap-8">
@@ -155,11 +156,11 @@ const beliefs = [
         </section>
 
         <!-- 7. Dark CTA Section -->
-        <section class="py-32 bg-[#0A1221] text-white">
+        <section class="py-20 sm:py-32 bg-[#0A1221] text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                     <div>
-                        <h2 class="text-4xl font-bold mb-6 leading-tight">You'll be happy to see our awesome features</h2>
+                        <h2 class="text-3xl sm:text-4xl font-bold mb-6 leading-tight">You'll be happy to see our awesome features</h2>
                         <p class="text-gray-400 mb-8 leading-relaxed max-w-xl">
                             Expression of modern scientific inquiry and exposition. Our approach follows a series of sprints to deliver consistent value while maintaining craftsmanship.
                         </p>
@@ -167,8 +168,8 @@ const beliefs = [
                             Explore our products <span class="ml-2">→</span>
                         </Link>
                     </div>
-                    <div class="flex justify-end">
-                        <img src="https://bronx.peachy.ng/build/assets/hero-batteries.png" alt="Products" class="max-h-[300px] object-contain">
+                    <div class="flex justify-center lg:justify-end">
+                        <img src="https://bronx.peachy.ng/build/assets/hero-batteries.png" alt="Products" class="max-h-[260px] sm:max-h-[300px] max-w-full object-contain">
                     </div>
                 </div>
             </div>
@@ -177,50 +178,19 @@ const beliefs = [
         <!-- Newsletter & Footer (Reused) -->
         <section class="py-16 bg-[#00D1FF] text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                    <div class="w-full md:w-auto">
                         <h2 class="text-3xl font-bold mb-2">Subscribe Newsletter</h2>
                         <p class="text-white/90">Stay up to date with the latest news and offers</p>
                     </div>
-                    <form class="w-full max-w-md flex bg-white rounded-md overflow-hidden p-1 shadow-lg">
-                        <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-0">
-                        <button class="bg-[#FFD700] hover:bg-[#FFC400] text-black px-6 py-2 rounded font-bold transition">Subscribe</button>
+                    <form class="w-full max-w-md flex flex-col sm:flex-row bg-white rounded-md overflow-hidden p-1 gap-1 sm:gap-0 shadow-lg">
+                        <input type="email" placeholder="Your email address" class="min-w-0 flex-1 px-4 py-3 sm:py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-0">
+                        <button class="bg-[#FFD700] hover:bg-[#FFC400] text-black px-6 py-3 sm:py-2 rounded font-bold transition">Subscribe</button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-[#0A1221] text-white pt-20 pb-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-3 gap-12 mb-20">
-                    <div class="space-y-6">
-                        <Link href="/" class="flex items-center">
-                            <img src="/images/Bronx_Logo_2-removebg-preview.png" alt="Bronx Logo" class="h-10 w-auto">
-                        </Link>
-                        <p class="text-gray-400 text-sm">Innovation in battery technology</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-6 uppercase text-sm tracking-wider">Quick Links</h4>
-                        <ul class="space-y-4 text-sm text-gray-400">
-                            <li><Link href="/" class="hover:text-white transition">Home</Link></li>
-                            <li><Link :href="route('product.index')" class="hover:text-white transition">Product</Link></li>
-                            <li><Link :href="route('about.index')" class="hover:text-white transition">About Us</Link></li>
-                            <li><Link href="#" class="hover:text-white transition">Contact Us</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-6 uppercase text-sm tracking-wider">Opening Time</h4>
-                        <ul class="space-y-4 text-sm text-gray-400">
-                            <li>Monday - Friday: 9am - 5pm</li>
-                            <li>Saturday: 10am - 3pm</li>
-                            <li>Sunday: Closed</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center">
-                    <p class="text-sm text-gray-500">&copy; 2026 Bronx. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
+        <Footer />
     </div>
 </template>

@@ -49,7 +49,7 @@ class AuthController extends Controller
                 'kingschat_auth_url' => route('auth.kingschat')
             ]);
         }
-
+ 
         try {
             \Log::info('Fetching KingsChat profile with token');
             $profile = $this->kingsChatService->fetchProfile($accessToken);

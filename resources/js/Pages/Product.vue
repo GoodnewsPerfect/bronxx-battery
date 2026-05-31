@@ -5,6 +5,7 @@ import Header from '@/Components/Header.vue';
 import Sidebar from '@/Components/Sidebar.vue';
 import Modal from '@/Components/Modal.vue';
 import Toast from '@/Components/Toast.vue';
+import Footer from '@/Components/Footer.vue';
 
 const props = defineProps({
     products: Array,
@@ -101,7 +102,7 @@ const addToCart = () => {
 <template>
     <Head title="Products" />
 
-    <div class="min-h-screen bg-white text-gray-900 font-sans flex flex-col pt-28">
+    <div class="min-h-screen overflow-x-hidden bg-white text-gray-900 font-sans flex flex-col pt-28">
         <Toast ref="toast" />
         <Sidebar :open="isSidebarOpen" />
         <Header :cart="cart" @toggle-sidebar="toggleSidebar" @toggle-search="toggleSearch" />
@@ -134,7 +135,7 @@ const addToCart = () => {
         <!-- Products Grid Section -->
         <main class="flex-1 py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
                     <template v-if="filteredProducts.length">
                         <div 
                             v-for="product in filteredProducts" 
@@ -180,8 +181,8 @@ const addToCart = () => {
         <Modal :show="isPreviewOpen" @close="closePreview" maxWidth="xl">
             <div v-if="selectedProduct" class="bg-white p-5 sm:p-6 rounded-lg relative shadow-2xl">
                 <!-- Header -->
-                <div class="flex justify-between items-start mb-5">
-                    <h2 class="text-xl font-bold text-gray-900 leading-tight">{{ selectedProduct.name }}</h2>
+                <div class="flex justify-between items-start gap-4 mb-5">
+                    <h2 class="min-w-0 text-lg sm:text-xl font-bold text-gray-900 leading-tight">{{ selectedProduct.name }}</h2>
                     <button @click="closePreview" class="text-gray-400 hover:text-gray-600 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -208,7 +209,7 @@ const addToCart = () => {
                         <!-- Price -->
                         <div class="flex items-center space-x-2 mb-4">
                             <img src="/images/espees_logo.png" alt="Espees" class="w-5 h-5 object-contain">
-                            <span class="text-3xl font-bold text-gray-900 leading-none">{{ selectedProduct.price }}</span>
+                            <span class="text-2xl sm:text-3xl font-bold text-gray-900 leading-none">{{ selectedProduct.price }}</span>
                         </div>
 
                         <!-- Description -->
@@ -244,11 +245,11 @@ const addToCart = () => {
                             </p>
 
                              <!-- Actions -->
-                             <div class="flex flex-nowrap items-center gap-4 pt-1">
+                             <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pt-1">
                                  <button 
                                      @click="addToCart"
                                      :disabled="isAddingToCart"
-                                     class="inline-flex h-10 shrink-0 items-center justify-center rounded-lg bg-[#2456C6] px-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1f4db5]"
+                                     class="inline-flex h-10 w-full sm:w-auto shrink-0 items-center justify-center rounded-lg bg-[#2456C6] px-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1f4db5]"
                                      :class="{ 'opacity-60 cursor-not-allowed': isAddingToCart }"
                                  >
                                      <svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -258,7 +259,7 @@ const addToCart = () => {
                                  </button>
                                  <button 
                                      @click="closePreview"
-                                     class="h-10 shrink-0 px-2 text-sm font-semibold text-gray-900 transition hover:text-gray-600"
+                                     class="h-10 w-full sm:w-auto shrink-0 px-2 text-sm font-semibold text-gray-900 transition hover:text-gray-600"
                                  >
                                      Cancel
                                  </button>
@@ -272,18 +273,18 @@ const addToCart = () => {
         <!-- Newsletter Section (Reused from Home) -->
         <section class="py-16 bg-[#00D1FF] text-white mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                    <div class="w-full md:w-auto">
                         <h2 class="text-3xl font-bold mb-2">Subscribe Newsletter</h2>
                         <p class="text-white/90">Stay up to date with the latest news and offers</p>
                     </div>
-                    <form class="w-full max-w-md flex bg-white rounded-md overflow-hidden p-1 shadow-lg">
+                    <form class="w-full max-w-md flex flex-col sm:flex-row bg-white rounded-md overflow-hidden p-1 gap-1 sm:gap-0 shadow-lg">
                         <input 
                             type="email" 
                             placeholder="Your email address" 
-                            class="flex-1 px-4 py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-0"
+                            class="min-w-0 flex-1 px-4 py-3 sm:py-2 text-gray-900 placeholder-gray-400 border-none focus:ring-0"
                         >
-                        <button class="bg-[#FFD700] hover:bg-[#FFC400] text-black px-6 py-2 rounded font-bold transition">
+                        <button class="bg-[#FFD700] hover:bg-[#FFC400] text-black px-6 py-3 sm:py-2 rounded font-bold transition">
                             Subscribe
                         </button>
                     </form>
@@ -291,44 +292,6 @@ const addToCart = () => {
             </div>
         </section>
 
-        <!-- Footer Section (Reused from Home) -->
-        <footer class="bg-[#0A1221] text-white pt-20 pb-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-3 gap-12 mb-20">
-                    <div class="space-y-6">
-                        <Link href="/" class="flex items-center">
-                            <img src="/images/Bronx_Logo_2-removebg-preview.png" alt="Bronx Logo" class="h-10 w-auto">
-                        </Link>
-                        <p class="text-gray-400 text-sm">Innovation in battery technology</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-6 uppercase text-sm tracking-wider">Quick Links</h4>
-                        <ul class="space-y-4 text-sm text-gray-400">
-                            <li><Link href="/" class="hover:text-white transition">Home</Link></li>
-                            <li><Link :href="route('product.index')" class="hover:text-white transition">Product</Link></li>
-                            <li><Link href="#" class="hover:text-white transition">About Us</Link></li>
-                            <li><Link href="#" class="hover:text-white transition">Contact Us</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-6 uppercase text-sm tracking-wider">Opening Time</h4>
-                        <ul class="space-y-4 text-sm text-gray-400">
-                            <li>Monday - Friday: 9am - 5pm</li>
-                            <li>Saturday: 10am - 3pm</li>
-                            <li>Sunday: Closed</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p class="text-sm text-gray-500">&copy; 2026 Bronx. All rights reserved.</p>
-                    <div class="flex space-x-6">
-                        <!-- Social Icons -->
-                        <a v-for="i in 4" :key="i" href="#" class="text-gray-400 hover:text-white transition">
-                            <div class="w-5 h-5 bg-gray-400/20 rounded-full"></div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <Footer />
     </div>
 </template>
