@@ -56,43 +56,43 @@ const submit = () => {
         </div>
 
         <form class="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]" @submit.prevent="submit">
-            <section class="space-y-5 rounded-xl border border-black bg-white p-6">
+            <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <label class="block">
                     <span class="text-sm font-bold">Product name</span>
-                    <input v-model="form.name" type="text" class="mt-2 h-12 w-full rounded-lg border border-black px-4">
+                    <input v-model="form.name" type="text" class="mt-2 h-12 w-full rounded-lg border border-gray-300 px-4 focus:border-brand focus:ring-brand">
                     <span v-if="form.errors.name" class="mt-2 block text-sm text-red-600">{{ form.errors.name }}</span>
                 </label>
 
                 <label class="block">
                     <span class="text-sm font-bold">Description</span>
-                    <textarea v-model="form.description" rows="6" class="mt-2 w-full rounded-lg border border-black px-4 py-3" />
+                    <textarea v-model="form.description" rows="6" class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand focus:ring-brand" />
                     <span v-if="form.errors.description" class="mt-2 block text-sm text-red-600">{{ form.errors.description }}</span>
                 </label>
 
                 <label class="block">
-                    <span class="text-sm font-bold">Price</span>
-                    <input v-model="form.price" type="number" min="0" step="0.01" class="mt-2 h-12 w-full rounded-lg border border-black px-4">
+                    <span class="text-sm font-bold">Price (Espees)</span>
+                    <input v-model="form.price" type="number" min="0" step="0.01" class="mt-2 h-12 w-full rounded-lg border border-gray-300 px-4 focus:border-brand focus:ring-brand">
                     <span v-if="form.errors.price" class="mt-2 block text-sm text-red-600">{{ form.errors.price }}</span>
                 </label>
 
                 <label class="flex items-center gap-3 text-sm font-bold">
-                    <input v-model="form.is_sold_out" type="checkbox" class="rounded border-black text-black">
+                    <input v-model="form.is_sold_out" type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand">
                     Mark as sold out
                 </label>
 
                 <div class="flex flex-wrap gap-3 pt-4">
-                    <button type="submit" :disabled="form.processing" class="rounded-lg bg-black px-5 py-3 text-sm font-bold text-white disabled:opacity-50">
+                    <button type="submit" :disabled="form.processing" class="rounded-lg bg-brand px-5 py-3 text-sm font-bold text-white transition hover:bg-brand-dark disabled:opacity-50">
                         {{ isEditing ? 'Update Product' : 'Create Product' }}
                     </button>
-                    <Link :href="route('admin.products.index')" class="rounded-lg border border-black px-5 py-3 text-sm font-bold">
+                    <Link :href="route('admin.products.index')" class="rounded-lg border border-gray-300 px-5 py-3 text-sm font-bold hover:bg-gray-50">
                         Cancel
                     </Link>
                 </div>
             </section>
 
-            <aside class="rounded-xl border border-black bg-white p-6">
+            <aside class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-black">Product Image</h2>
-                <div class="mt-4 aspect-square overflow-hidden rounded-lg border border-black bg-gray-100">
+                <div class="mt-4 aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
                     <img v-if="imagePreview" :src="imagePreview" alt="Product preview" class="h-full w-full object-cover">
                     <div v-else class="flex h-full items-center justify-center text-sm font-bold text-gray-500">Preview</div>
                 </div>

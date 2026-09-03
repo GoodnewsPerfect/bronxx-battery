@@ -66,7 +66,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/payment/initialize-espees', [PaymentController::class, 'initializeEspeesPayment'])->name('payment.initialize-espees');
     Route::post('/payment/confirm-espees', [PaymentController::class, 'confirmEspeesPayment'])->name('payment.confirm-espees');
-    Route::post('/payment/espees-proxy', [PaymentController::class, 'espeesProxy'])->name('payment.espees-proxy');
 });
 
 require __DIR__.'/auth.php';

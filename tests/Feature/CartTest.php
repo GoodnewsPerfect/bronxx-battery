@@ -17,9 +17,9 @@ it('adds a guest cart item to the database and session', function () {
     $this->assertDatabaseHas('cart_items', [
         'user_id' => null,
         'product_id' => 1,
-        'product_name' => 'Bronxx Core Battery',
+        'product_name' => 'Bronx Batteries',
         'quantity' => 2,
-        'subtotal' => 0.2,
+        'subtotal' => 3.00,
     ]);
 });
 
@@ -42,7 +42,7 @@ it('increments an existing cart item instead of creating a duplicate', function 
         'user_id' => $user->id,
         'product_id' => 1,
         'quantity' => 5,
-        'subtotal' => 0.5,
+        'subtotal' => 7.50,
     ]);
 });
 
@@ -51,15 +51,15 @@ it('stores authenticated cart items against the user', function () {
 
     $this->actingAs($user)
         ->post(route('cart.add'), [
-            'product_id' => 2,
+            'product_id' => 1,
             'quantity' => 1,
         ])
-        ->assertSessionHas('cart.items.2.quantity', 1);
+        ->assertSessionHas('cart.items.1.quantity', 1);
 
     $this->assertDatabaseHas('cart_items', [
         'user_id' => $user->id,
-        'product_id' => 2,
-        'product_name' => 'Bronxx Fast Charger',
+        'product_id' => 1,
+        'product_name' => 'Bronx Batteries',
         'quantity' => 1,
     ]);
 });
@@ -68,7 +68,7 @@ it('keeps guest cart items visible after the customer logs in', function () {
     $user = User::factory()->create();
 
     $this->post(route('cart.add'), [
-        'product_id' => 3,
+        'product_id' => 1,
         'quantity' => 2,
     ]);
 
@@ -78,13 +78,13 @@ it('keeps guest cart items visible after the customer logs in', function () {
 
     $this->assertDatabaseHas('cart_items', [
         'user_id' => $user->id,
-        'product_id' => 3,
+        'product_id' => 1,
         'quantity' => 2,
     ]);
 
     $this->assertDatabaseMissing('cart_items', [
         'user_id' => null,
-        'product_id' => 3,
+        'product_id' => 1,
     ]);
 });
 
@@ -119,15 +119,15 @@ it('creates an order when checkout is completed', function () {
 
     $this->assertDatabaseHas('orders', [
         'user_id' => $user->id,
-        'total_amount' => 0.2,
+        'total_amount' => 3.00,
         'payment_method' => 'espees',
         'shipping_address' => null,
     ]);
 
     $this->assertDatabaseHas('order_items', [
-        'product_name' => 'Bronxx Core Battery',
+        'product_name' => 'Bronx Batteries',
         'quantity' => 2,
-        'subtotal' => 0.2,
+        'subtotal' => 3.00,
     ]);
 
     expect(CartItem::where('user_id', $user->id)->count())->toBe(0);

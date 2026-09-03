@@ -64,7 +64,7 @@ const clearCart = () => {
 <template>
     <header class="fixed top-0 z-50 w-full transition-all duration-300 shadow-lg">
         <!-- Top Bar -->
-        <div class="bg-[#0047AB] py-2 px-4 sm:px-6 lg:px-8">
+        <div class="bg-brand-dark py-2 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-start gap-x-4 gap-y-1 text-xs text-white/90">
                 <template v-if="!user">
                     <Link :href="route('login')" class="hover:text-white transition">Log in</Link>
@@ -80,12 +80,12 @@ const clearCart = () => {
         </div>
 
         <!-- Main Navigation -->
-        <div class="bg-[#0056D2] py-4 px-4 sm:px-6 lg:px-8 shadow-sm">
+        <div class="bg-brand py-3 px-4 sm:px-6 lg:px-8 shadow-sm">
             <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
                 <!-- Logo -->
                 <div class="flex items-center">
                     <Link href="/" class="flex items-center">
-                        <img src="/images/Bronx_Logo_2-removebg-preview.png" alt="Bronx Logo" class="h-10 w-auto">
+                        <img src="/images/Bronx_Logo_2-removebg-preview.png" alt="Bronx Batteries" class="h-10 w-auto sm:h-11">
                     </Link>
                 </div>
 
@@ -99,22 +99,22 @@ const clearCart = () => {
                 </nav>
 
                 <!-- Icons -->
-                <div class="flex shrink-0 items-center space-x-4 sm:space-x-5 text-white">
-                    <button @click="emit('toggleSearch')" class="hover:text-white/80 transition" aria-label="Search products">
+                <div class="flex shrink-0 items-center text-white">
+                    <button @click="emit('toggleSearch')" class="flex h-11 w-11 items-center justify-center transition hover:text-white/80" aria-label="Search products">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
-                    <button @click="isCartOpen = true" class="relative hover:text-white/80 transition" aria-label="Open cart">
+                    <button @click="isCartOpen = true" class="relative flex h-11 w-11 items-center justify-center transition hover:text-white/80" aria-label="Open cart">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <span v-if="activeCart.item_count > 0" class="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 text-[10px] text-white bg-[#FF4D4D] rounded-full">
+                        <span v-if="activeCart.item_count > 0" class="absolute top-1 right-1 flex items-center justify-center w-4 h-4 text-[10px] text-white bg-danger rounded-full">
                             {{ activeCart.item_count }}
                         </span>
                     </button>
                     <!-- Mobile Menu Button -->
-                    <button @click="emit('toggleSidebar')" class="md:hidden hover:text-white/80 transition">
+                    <button @click="emit('toggleSidebar')" class="flex h-11 w-11 items-center justify-center transition hover:text-white/80 md:hidden" aria-label="Open menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -205,7 +205,7 @@ const clearCart = () => {
                     </div>
                     <button
                         @click="removeItem(item)"
-                        class="mt-10 flex h-7 w-7 shrink-0 items-center justify-center text-[#FF4D4D] hover:text-red-600"
+                        class="mt-10 flex h-7 w-7 shrink-0 items-center justify-center text-danger hover:text-red-600"
                         aria-label="Remove item"
                     >
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,7 +221,7 @@ const clearCart = () => {
                 </div>
                 <Link
                     :href="route('checkout')"
-                    class="flex-1 rounded-lg bg-[#F9AD32] px-4 py-2.5 text-center text-sm font-semibold text-black transition hover:bg-[#f3a11d]"
+                    class="flex-1 rounded-lg bg-accent px-4 py-2.5 text-center text-sm font-semibold text-black transition hover:bg-accent-dark"
                     :class="{ 'pointer-events-none opacity-50': !cartItems.length }"
                 >
                     Checkout

@@ -24,7 +24,7 @@ const isActivePath = (paths) => {
 const navItemClass = (paths) => [
     'flex items-center rounded-md px-4 py-2 transition',
     isActivePath(paths)
-        ? 'bg-[#0056D2] text-white'
+        ? 'bg-brand text-white'
         : 'text-gray-800 hover:bg-gray-100',
 ];
 </script>
@@ -35,7 +35,7 @@ const navItemClass = (paths) => [
         :class="{ '-translate-x-full': !open }"
     >
         <div class="flex flex-col h-full">
-            <div class="flex h-20 items-center justify-center border-b border-gray-100 bg-[#0056D2]">
+            <div class="flex h-20 items-center justify-center border-b border-gray-100 bg-brand">
                 <Link href="/" class="flex items-center">
                     <img src="/images/Bronx_Logo_2-removebg-preview.png" alt="Bronx Logo" class="h-10 w-auto">
                 </Link>
@@ -76,7 +76,7 @@ const navItemClass = (paths) => [
                 <div v-if="!$page.props.auth.user" class="space-y-2">
                     <Link
                         :href="route('login')"
-                        class="block w-full rounded-md bg-[#0056D2] px-4 py-2 text-center text-white transition hover:bg-[#0047AB]"
+                        class="block w-full rounded-md bg-brand px-4 py-2 text-center text-white transition hover:bg-brand-dark"
                     >
                         Login
                     </Link>

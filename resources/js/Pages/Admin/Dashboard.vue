@@ -28,23 +28,23 @@ const orderCode = (order) => `ORD-${String(order.id).padStart(10, '0')}`;
                 <h1 class="text-3xl font-black">Dashboard</h1>
                 <p class="mt-1 text-gray-500">Store overview and recent activity.</p>
             </div>
-            <Link :href="route('admin.products.create')" class="rounded-lg bg-black px-4 py-3 text-sm font-bold text-white">
+            <Link :href="route('admin.products.create')" class="rounded-lg bg-brand px-4 py-3 text-sm font-bold text-white transition hover:bg-brand-dark">
                 Add Product
             </Link>
         </div>
 
         <section class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            <div v-for="(value, key) in stats" :key="key" class="rounded-xl border border-black bg-white p-5">
+            <div v-for="(value, key) in stats" :key="key" class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
                 <p class="text-sm font-bold text-gray-500">{{ statLabels[key] }}</p>
                 <p class="mt-3 text-3xl font-black">{{ value }}</p>
             </div>
         </section>
 
         <section class="mt-8 grid gap-6 lg:grid-cols-2">
-            <div class="rounded-xl border border-black bg-white p-5">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
                 <div class="mb-5 flex items-center justify-between">
                     <h2 class="text-xl font-black">Recent Orders</h2>
-                    <Link :href="route('admin.orders.index')" class="text-sm font-bold underline">View all</Link>
+                    <Link :href="route('admin.orders.index')" class="text-sm font-bold text-brand hover:underline">View all</Link>
                 </div>
                 <div class="space-y-3">
                     <div v-for="order in recentOrders" :key="order.id" class="flex items-center justify-between border-b border-gray-200 pb-3">
@@ -58,10 +58,10 @@ const orderCode = (order) => `ORD-${String(order.id).padStart(10, '0')}`;
                 </div>
             </div>
 
-            <div class="rounded-xl border border-black bg-white p-5">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
                 <div class="mb-5 flex items-center justify-between">
                     <h2 class="text-xl font-black">Recent Products</h2>
-                    <Link :href="route('admin.products.index')" class="text-sm font-bold underline">View all</Link>
+                    <Link :href="route('admin.products.index')" class="text-sm font-bold text-brand hover:underline">View all</Link>
                 </div>
                 <div class="space-y-3">
                     <div v-for="product in recentProducts" :key="product.id" class="flex items-center justify-between border-b border-gray-200 pb-3">

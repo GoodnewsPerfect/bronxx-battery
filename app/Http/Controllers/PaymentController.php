@@ -194,27 +194,6 @@ class PaymentController extends Controller
         ], $response->status());
     }
 
-    public function espeesProxy(Request $request)
-    {
-        try {
-            $response = Http::timeout(config('services.espees.timeout', 45))
-                ->acceptJson()
-                ->asJson()
-                ->post($this->espeesApiUrl('/payment/product'), $request->all());
-        } catch (\Throwable $exception) {
-            Log::error('Espees proxy request failed', [
-                'error' => $exception->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => 'Unable to reach Espees API.',
-            ], 502);
-        }
-
-        return response($response->body(), $response->status())
-            ->header('Content-Type', $response->header('Content-Type', 'application/json'));
-    }
-
     private function finalOrderPrice(Order $order): float
     {
         $orderType = strtolower((string) ($order->type ?? $order->order_type ?? $order->tier ?? ''));
