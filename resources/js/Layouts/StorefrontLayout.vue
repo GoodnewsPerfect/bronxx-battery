@@ -1,6 +1,6 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
-import { onMounted, provide, ref, watch } from 'vue';
+import { router, useForm, usePage } from '@inertiajs/vue3';
+import { computed, onMounted, provide, ref, watch } from 'vue';
 import Toast from '@/Components/Toast.vue';
 import Sidebar from '@/Components/Sidebar.vue';
 import Header from '@/Components/Header.vue';
@@ -36,6 +36,23 @@ const showFlash = () => {
 
 onMounted(showFlash);
 watch(() => page.props.flash, showFlash);
+
+const user = computed(() => page.props.auth.user);
+
+const newsletterForm = useForm({
+    email: user.value?.email ?? '',
+});
+
+const submitNewsletter = () => {
+    if (!user.value) {
+        router.visit(route('login'));
+        return;
+    }
+
+    newsletterForm.post(route('newsletter.subscribe'), {
+        preserveScroll: true,
+    });
+};
 </script>
 
 <template>
@@ -54,15 +71,21 @@ watch(() => page.props.flash, showFlash);
                     <h2 class="mb-2 text-3xl font-bold">Subscribe Newsletter</h2>
                     <p class="text-white/90">Stay up to date with the latest news and offers</p>
                 </div>
-                <form class="flex w-full max-w-md flex-col gap-1 rounded-md bg-white p-1 shadow-lg sm:flex-row sm:gap-0" @submit.prevent>
+                <form class="flex w-full max-w-md flex-col gap-1 rounded-md bg-white p-1 shadow-lg sm:flex-row sm:gap-0" @submit.prevent="submitNewsletter">
                     <label for="newsletter-email" class="sr-only">Email address</label>
                     <input
                         id="newsletter-email"
+                        v-model="newsletterForm.email"
                         type="email"
+                        required
                         placeholder="Your email address"
                         class="min-w-0 flex-1 border-none px-4 py-3 text-gray-900 placeholder-gray-400 focus:ring-0 sm:py-2"
                     >
-                    <button class="rounded bg-gold px-6 py-3 font-bold text-black transition hover:bg-gold-dark sm:py-2">
+                    <button
+                        type="submit"
+                        :disabled="newsletterForm.processing"
+                        class="rounded bg-gold px-6 py-3 font-bold text-black transition hover:bg-gold-dark disabled:cursor-not-allowed disabled:opacity-70 sm:py-2"
+                    >
                         Subscribe
                     </button>
                 </form>

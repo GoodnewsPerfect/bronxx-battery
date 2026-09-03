@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -66,6 +67,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/payment/initialize-espees', [PaymentController::class, 'initializeEspeesPayment'])->name('payment.initialize-espees');
     Route::post('/payment/confirm-espees', [PaymentController::class, 'confirmEspeesPayment'])->name('payment.confirm-espees');
+
+    Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
 });
 
 require __DIR__.'/auth.php';
